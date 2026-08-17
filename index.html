@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NoorWalker | Streamer</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#0d0d0d;
+    color:white;
+    line-height:1.6;
+    overflow-x:hidden;
+}
+
+/* =========================
+   ANIMATED BACKGROUND
+========================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    width:500px;
+    height:500px;
+    background:#00ffcc;
+    border-radius:50%;
+    filter:blur(180px);
+    opacity:.08;
+    top:-200px;
+    left:-200px;
+    animation:orb1 10s infinite alternate ease-in-out;
+    pointer-events:none;
+    z-index:-1;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:500px;
+    height:500px;
+    background:#00ccff;
+    border-radius:50%;
+    filter:blur(180px);
+    opacity:.08;
+    bottom:-200px;
+    right:-200px;
+    animation:orb2 12s infinite alternate ease-in-out;
+    pointer-events:none;
+    z-index:-1;
+}
+
+@keyframes orb1{
+    from{
+        transform:translate(0,0);
+    }
+    to{
+        transform:translate(300px,200px);
+    }
+}
+
+@keyframes orb2{
+    from{
+        transform:translate(0,0);
+    }
+    to{
+        transform:translate(-300px,-200px);
+    }
+}
+
+/* =========================
+   HERO
+========================= */
+
+header{
+    height:100vh;
+    position:relative;
+    overflow:hidden;
+
+    background:
+    linear-gradient(rgba(0,0,0,.72),rgba(0,0,0,.82)),
+    url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1600&q=80');
+
+    background-size:cover;
+    background-position:center;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+/* Animated grid */
+
+header::before{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background-image:
+        linear-gradient(rgba(0,255,204,.08) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,255,204,.08) 1px,transparent 1px);
+
+    background-size:50px 50px;
+
+    animation:gridMove 10s linear infinite;
+}
+
+@keyframes gridMove{
+    from{
+        background-position:0 0;
+    }
+    to{
+        background-position:50px 50px;
+    }
+}
+
+/* Scan line */
+
+header::after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    height:3px;
+    background:#00ffcc;
+    box-shadow:0 0 20px #00ffcc;
+    opacity:.35;
+    animation:scan 5s linear infinite;
+}
+
+@keyframes scan{
+    0%{
+        top:-5px;
+    }
+
+    100%{
+        top:100%;
+    }
+}
+
+.hero{
+    position:relative;
+    z-index:2;
+    animation:heroAppear 1.5s ease-out;
+}
+
+@keyframes heroAppear{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.hero h1{
+    font-size:5rem;
+    color:#00ffcc;
+
+    text-shadow:
+        0 0 5px #00ffcc,
+        0 0 15px #00ffcc,
+        0 0 30px #00ffcc;
+
+    animation:
+        neonPulse 2s infinite alternate,
+        glitch 5s infinite;
+}
+
+@keyframes neonPulse{
+    from{
+        text-shadow:
+        0 0 5px #00ffcc,
+        0 0 15px #00ffcc;
+    }
+
+    to{
+        text-shadow:
+        0 0 10px #00ffcc,
+        0 0 30px #00ffcc,
+        0 0 60px #00ffcc;
+    }
+}
+
+@keyframes glitch{
+    0%,90%,100%{
+        transform:translate(0);
+    }
+
+    92%{
+        transform:translate(-3px,2px);
+    }
+
+    94%{
+        transform:translate(3px,-2px);
+    }
+
+    96%{
+        transform:translate(-2px,0);
+    }
+}
+
+.hero p{
+    font-size:1.4rem;
+    margin:20px 0;
+    animation:fadeIn 2s ease;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+    }
+
+    to{
+        opacity:1;
+    }
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.btn{
+    display:inline-block;
+    padding:15px 35px;
+
+    background:#00ffcc;
+    color:#000;
+
+    text-decoration:none;
+    border-radius:30px;
+
+    font-weight:bold;
+
+    box-shadow:
+        0 0 10px #00ffcc,
+        0 0 25px rgba(0,255,204,.5);
+
+    transition:.3s;
+
+    position:relative;
+    overflow:hidden;
+}
+
+.btn::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.6),
+        transparent
+    );
+
+    transition:.5s;
+}
+
+.btn:hover::before{
+    left:100%;
+}
+
+.btn:hover{
+    transform:scale(1.1);
+    box-shadow:
+        0 0 15px #00ffcc,
+        0 0 40px #00ffcc;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+
+section{
+    padding:80px 10%;
+    position:relative;
+}
+
+.section-title{
+    text-align:center;
+    font-size:2.5rem;
+    margin-bottom:40px;
+    color:#00ffcc;
+
+    text-shadow:0 0 15px #00ffcc;
+
+    animation:titleGlow 2s infinite alternate;
+}
+
+@keyframes titleGlow{
+    from{
+        text-shadow:0 0 5px #00ffcc;
+    }
+
+    to{
+        text-shadow:
+            0 0 10px #00ffcc,
+            0 0 25px #00ffcc;
+    }
+}
+
+/* =========================
+   ABOUT
+========================= */
+
+.about{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    align-items:center;
+}
+
+.about img{
+    width:100%;
+    border-radius:20px;
+
+    box-shadow:
+        0 0 10px #00ffcc,
+        0 0 30px rgba(0,255,204,.3);
+
+    transition:.5s;
+}
+
+.about img:hover{
+    transform:scale(1.03) rotate(-1deg);
+
+    box-shadow:
+        0 0 20px #00ffcc,
+        0 0 50px #00ffcc;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.card-container{
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(250px,1fr));
+
+    gap:20px;
+}
+
+.card{
+    background:rgba(26,26,26,.85);
+
+    padding:25px;
+
+    border-radius:15px;
+
+    text-align:center;
+
+    border:1px solid #00ffcc;
+
+    box-shadow:
+        0 0 10px rgba(0,255,204,.15);
+
+    transition:.4s;
+
+    position:relative;
+    overflow:hidden;
+}
+
+.card::before{
+    content:"";
+
+    position:absolute;
+
+    width:100%;
+    height:3px;
+
+    top:0;
+    left:-100%;
+
+    background:#00ffcc;
+
+    box-shadow:0 0 15px #00ffcc;
+
+    transition:.5s;
+}
+
+.card:hover::before{
+    left:0;
+}
+
+.card:hover{
+    transform:
+        translateY(-10px)
+        scale(1.03);
+
+    box-shadow:
+        0 0 20px rgba(0,255,204,.4),
+        0 0 40px rgba(0,255,204,.15);
+}
+
+.card h3{
+    color:#00ffcc;
+    margin-bottom:10px;
+
+    text-shadow:0 0 10px #00ffcc;
+}
+
+/* =========================
+   SOCIALS
+========================= */
+
+.socials{
+    text-align:center;
+}
+
+.socials a{
+    display:inline-block;
+
+    color:white;
+    text-decoration:none;
+
+    margin:15px;
+
+    font-size:1.2rem;
+
+    padding:10px 20px;
+
+    border:1px solid transparent;
+
+    border-radius:10px;
+
+    transition:.3s;
+}
+
+.socials a:hover{
+    color:#00ffcc;
+
+    border-color:#00ffcc;
+
+    box-shadow:
+        0 0 10px #00ffcc,
+        0 0 25px rgba(0,255,204,.3);
+
+    transform:
+        translateY(-5px)
+        scale(1.05);
+}
+
+/* =========================
+   FLOATING PARTICLES
+========================= */
+
+.particle{
+    position:fixed;
+
+    width:4px;
+    height:4px;
+
+    background:#00ffcc;
+
+    border-radius:50%;
+
+    box-shadow:0 0 10px #00ffcc;
+
+    pointer-events:none;
+
+    animation:floatParticle linear infinite;
+
+    z-index:0;
+}
+
+@keyframes floatParticle{
+
+    0%{
+        transform:
+            translateY(100vh)
+            translateX(0);
+
+        opacity:0;
+    }
+
+    10%{
+        opacity:1;
+    }
+
+    90%{
+        opacity:1;
+    }
+
+    100%{
+        transform:
+            translateY(-10vh)
+            translateX(100px);
+
+        opacity:0;
+    }
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    background:#111;
+
+    text-align:center;
+
+    padding:20px;
+
+    border-top:1px solid #00ffcc;
+
+    box-shadow:
+        0 -5px 25px rgba(0,255,204,.1);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:768px){
+
+    .hero h1{
+        font-size:3rem;
+    }
+
+    .hero p{
+        font-size:1.1rem;
+    }
+
+    .about{
+        grid-template-columns:1fr;
+    }
+
+    section{
+        padding:60px 7%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="hero">
+
+        <h1>NoorWalker</h1>
+
+        <p>
+            Streamer • Gamer • Community Builder
+        </p>
+
+        <a
+            href="https://kick.com/noorwalker"
+            class="btn"
+            target="_blank"
+        >
+            ⚡ WATCH LIVE
+        </a>
+
+    </div>
+
+</header>
+
+
+<section>
+
+    <h2 class="section-title">
+        About NoorWalker
+    </h2>
+
+    <div class="about">
+
+        <img
+            src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1000&q=80"
+            alt="Gaming Setup"
+        >
+
+        <div>
+
+            <h3 style="
+                color:#00ffcc;
+                margin-bottom:15px;
+            ">
+                Welcome To The Community
+            </h3>
+
+            <p>
+                NoorWalker aka Slim is a gaming streamer focused on
+                building a positive, fun, and welcoming
+                community.
+            </p>
+
+            <br>
+
+            <p>
+                Whether it's competitive gameplay,
+                survival adventures, RPGs, or just hanging
+                out and chatting, there's always something
+                exciting happening on stream.
+            </p>
+
+            <br>
+
+            <p>
+                Join the NoorWalker community and be part
+                of the journey. Every stream is a new
+                adventure.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section>
+
+    <h2 class="section-title">
+        Stream Schedule
+    </h2>
+
+    <div class="card-container">
+
+        <div class="card">
+            <h3>Monday</h3>
+            </p>TBA</p>
+        </div>
+
+        <div class="card">
+            <h3>Wednesday</h3>
+            <p>TBA</p>
+        </div>
+
+        <div class="card">
+            <h3>Friday</h3>
+            <p>TBA</p>
+        </div>
+
+        <div class="card">
+            <h3>Weekend</h3>
+            <p>Community Events</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section>
+
+    <h2 class="section-title">
+        Hit me up Fam.
+    </h2>
+
+    <div class="socials">
+
+        <a
+            href="https://www.twitch.tv/noorwalker"
+            target="_blank"
+        >
+            🎮 Twitch
+        </a>
+
+        <a
+            href="https://www.youtube.com/@NoorWalker1989"
+            target="_blank"
+        >
+            ▶ YouTube
+        </a>
+
+        <a
+            href="https://discord.gg/6CdPURyW"
+            target="_blank"
+        >
+            💬 Discord
+        </a>
+
+        <a
+            href="https://kick.com/noorwalker"
+            target="_blank"
+        >
+            ⚡ Kick
+        </a>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    <p>
+        © 2026 NoorWalker Streaming Community.
+        All Rights Reserved.
+    </p>
+
+</footer>
+
+
+<!-- =========================
+     ANIMATED PARTICLES
+========================= -->
+
+<script>
+
+const particleCount = 40;
+
+for(let i = 0; i < particleCount; i++){
+
+    const particle =
+        document.createElement("div");
+
+    particle.classList.add("particle");
+
+    particle.style.left =
+        Math.random() * 100 + "vw";
+
+    particle.style.animationDuration =
+        (5 + Math.random() * 10) + "s";
+
+    particle.style.animationDelay =
+        Math.random() * 10 + "s";
+
+    particle.style.opacity =
+        Math.random();
+
+    const size =
+        (2 + Math.random() * 5) + "px";
+
+    particle.style.width = size;
+    particle.style.height = size;
+
+    document.body.appendChild(particle);
+}
+
+
+/* =========================
+   MOUSE GLOW EFFECT
+========================= */
+
+document.addEventListener("mousemove", function(e){
+
+    const glow =
+        document.createElement("div");
+
+    glow.style.position = "fixed";
+    glow.style.left = e.clientX + "px";
+    glow.style.top = e.clientY + "px";
+
+    glow.style.width = "8px";
+    glow.style.height = "8px";
+
+    glow.style.borderRadius = "50%";
+
+    glow.style.background =
+        "#00ffcc";
+
+    glow.style.boxShadow =
+        "0 0 20px #00ffcc";
+
+    glow.style.pointerEvents =
+        "none";
+
+    glow.style.zIndex = "9999";
+
+    glow.style.transform =
+        "translate(-50%,-50%)";
+
+    document.body.appendChild(glow);
+
+    setTimeout(() => {
+        glow.style.transition =
+            "all .5s ease";
+
+        glow.style.opacity = "0";
+
+        glow.style.transform =
+            "translate(-50%,-50%) scale(3)";
+
+        setTimeout(() => {
+            glow.remove();
+        },500);
+
+    },30);
+
+});
+
+</script>
+
+</body>
+</html>
